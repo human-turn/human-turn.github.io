@@ -1,0 +1,39 @@
+---
+// Плеер Lottie-анимации через lottie-web. Файл анимации лежит в public/.
+interface Props {
+	src?: string;
+}
+const { src = '/neural-net.json' } = Astro.props;
+---
+
+<div class="lottie-nn" data-src={src} role="img" aria-label="Демо: как работает простая нейросеть">
+</div>
+
+<script>
+	import lottie from 'lottie-web';
+
+	for (const el of document.querySelectorAll('.lottie-nn')) {
+		const src = el instanceof HTMLElement ? el.dataset.src : undefined;
+		if (!src) continue;
+		lottie.loadAnimation({
+			container: el,
+			renderer: 'svg',
+			loop: true,
+			autoplay: true,
+			path: src,
+		});
+	}
+</script>
+
+<style>
+	.lottie-nn {
+		width: 100%;
+		max-width: 820px;
+		margin: 1.5rem auto;
+	}
+	.lottie-nn :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+</style>

@@ -132,3 +132,43 @@ import RemotionDemo from '~/components/RemotionDemo';
 **B. Рендер в видео + `<video>`** (если интерактив не нужен): отрендерить композицию в MP4/WebM через Remotion CLI и встроить как `<video>`. Легче по CPU и бандлу, предсказуемое воспроизведение, поддерживает субтитры. GIF — только для совсем коротких превью (тяжёлый и без управления); из современных — WebP/APNG лучше GIF.
 
 Правило: **нужна интерактивность → Player-остров; просто показать → видео.**
+
+### Lottie (векторные анимации, в т.ч. из After Effects)
+
+Вектор: крошечный вес, масштаб без потерь, прозрачность, можно управлять (play/pause/segments/скорость) и реагировать на скролл/ховер. Рендерим через `lottie-web` — без React. В проекте уже есть рабочий пример: компонент `src/components/LottieNeuralNet.astro` и демо на главной (`/`).
+
+Откуда берётся `.json`:
+
+- **из After Effects** — плагин Bodymovin / LottieFiles экспортирует композицию в `.json`;
+- **кодом** — пример-генератор `scripts/gen-neural-net-lottie.mjs` (перегенерация: `node scripts/gen-neural-net-lottie.mjs`).
+
+Файл анимации кладём в `public/` (отдаётся из корня, напр. `/neural-net.json`). Шаблон плеера:
+
+```astro
+---
+const { src = '/your-animation.json' } = Astro.props;
+---
+
+<div class="lottie" data-src={src}></div>
+
+<script>
+	import lottie from 'lottie-web';
+	for (const el of document.querySelectorAll('.lottie')) {
+		const src = el instanceof HTMLElement ? el.dataset.src : undefined;
+		if (src)
+			lottie.loadAnimation({
+				container: el,
+				renderer: 'svg',
+				loop: true,
+				autoplay: true,
+				path: src,
+			});
+	}
+</script>
+```
+
+- **Умеет:** формы, заливки/обводки, трансформы (позиция/масштаб/прозрачность), trim-path (прорисовка линий), текст, безье-изинг, луп.
+- **Не тянет:** часть AE-эффектов (blur, некоторые маски) и растровые слои — сложные сцены проверять на экспорте.
+- Альтернатива плееру: веб-компонент dotLottie `@lottiefiles/dotlottie-wc` (поддерживает сжатый `.lottie`).
+
+Когда что: **«нарисованная» сцена из AE → Lottie; реакция на пользователя → Rive; программная/датадривен → Remotion; фон без интерактива → видео.**
