@@ -1,0 +1,5 @@
+dist
+.astro
+.playwright-mcp
+package-lock.json
+*.cast

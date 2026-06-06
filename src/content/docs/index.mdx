@@ -1,0 +1,33 @@
+---
+title: Документация
+description: Документация проекта — соберите её из разделов ниже.
+template: splash
+hero:
+  tagline: Кратко о проекте — замените этот текст на описание продукта.
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: Начать
+      link: /getting-started/
+      icon: right-arrow
+    - text: Туториалы
+      link: /tutorials/
+      icon: open-book
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Разделы
+
+<CardGrid>
+	<LinkCard
+		title="Начало работы"
+		href="/getting-started/"
+		description="Установка и первый запуск."
+	/>
+	<LinkCard title="Туториалы" href="/tutorials/" description="Обучение с нуля, шаг за шагом." />
+	<LinkCard title="Руководства" href="/guides/" description="Как решать конкретные задачи." />
+	<LinkCard title="Справочник" href="/reference/" description="Точные технические факты." />
+	<LinkCard title="Концепции" href="/explanation/" description="Почему всё устроено именно так." />
+</CardGrid>
