@@ -1,0 +1,79 @@
+---
+title: Вставляем Lottie-анимацию в статью
+description: Пошагово добавляем векторную Lottie-анимацию на страницу документации.
+draft: true
+tags: [инструменты, lottie, туториал]
+sidebar:
+  label: Анимация Lottie
+  order: 1
+---
+
+import LottieNeuralNet from '~/components/LottieNeuralNet.astro';
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+Этот туториал проведёт через первый успешный опыт: вы добавите на страницу
+векторную анимацию [Lottie](https://lottiefiles.com/) и увидите её вживую.
+
+## Что получится
+
+<LottieNeuralNet />
+
+Анимация выше — обычный SVG, отрисованный из `.json`-файла. Она векторная:
+масштабируется без потери качества, весит немного и крутится в цикле.
+
+## Шаги
+
+<Steps>
+
+1. **Сделайте страницу `.mdx`, а не `.md`.**
+
+   Компоненты можно импортировать только в `.mdx`. Если статья была `.md` —
+   достаточно сменить расширение, frontmatter и текст менять не нужно.
+
+2. **Положите файл анимации в `public/`.**
+
+   В проекте уже лежит `public/neural-net.json`. Свои файлы кладите туда же —
+   они отдаются от корня сайта (`/neural-net.json`).
+
+3. **Импортируйте компонент во frontmatter-блоке после `---`.**
+
+   ```mdx
+   import LottieNeuralNet from '~/components/LottieNeuralNet.astro';
+   ```
+
+4. **Вставьте компонент в текст статьи.**
+
+   ```mdx
+   <LottieNeuralNet />
+   ```
+
+   Чтобы показать другую анимацию — передайте путь к своему `.json`:
+
+   ```mdx
+   <LottieNeuralNet src="/моя-анимация.json" />
+   ```
+
+</Steps>
+
+<Aside type="tip" title="Откуда брать .json">
+	Lottie-файлы экспортируются из After Effects плагином Bodymovin, скачиваются с
+	[LottieFiles](https://lottiefiles.com/) или генерируются кодом — пример генератора лежит в
+	`scripts/gen-neural-net-lottie.mjs`.
+</Aside>
+
+## Как это работает
+
+Компонент `LottieNeuralNet.astro` — тонкая обёртка над библиотекой `lottie-web`.
+Он создаёт контейнер, а клиентский скрипт подгружает `.json` и рендерит SVG в
+браузере. Параметр `src` позволяет переиспользовать один компонент для любых
+анимаций.
+
+<Aside type="caution">
+	Lottie тянет не все эффекты After Effects (часть масок, размытие) и не показывает растровые слои.
+	Сложные сцены проверяйте сразу после экспорта.
+</Aside>
+
+## Дальше
+
+- Своя анимация из After Effects → экспортируйте через Bodymovin и положите `.json` в `public/`.
+- Нужен интерактив (реакция на ховер/скролл) → см. раздел про Rive и Remotion в `CLAUDE.md`.
