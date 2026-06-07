@@ -9,7 +9,9 @@
 страницы видны в `npm run dev`, но **не попадают в прод-сборку** (`npm run build`).
 Принято → снимаем `draft: true`.
 
-| Страница                  | Путь                                         | Статус   | Заметки                |
-| ------------------------- | -------------------------------------------- | -------- | ---------------------- |
-| Lottie через Claude Code  | src/content/docs/tools/lottie-claude-code.md | черновик | ждёт ревью             |
-| Вставляем Lottie в статью | src/content/docs/tools/lottie-embed.mdx      | черновик | смотрели визуально, ок |
+| Страница                   | Путь                                           | Статус   | Заметки                |
+| -------------------------- | ---------------------------------------------- | -------- | ---------------------- |
+| Lottie через Claude Code   | src/content/docs/tools/lottie-claude-code.md   | черновик | ждёт ревью             |
+| Вставляем Lottie в статью  | src/content/docs/tools/lottie-embed.mdx        | черновик | смотрели визуально, ок |
+| Схема (Mermaid)            | src/content/docs/library/diagram-mermaid.md    | черновик | проверка движка        |
+| Мок интерфейса Claude Code | src/content/docs/library/block-claude-code.mdx | черновик | эталонный блок         |

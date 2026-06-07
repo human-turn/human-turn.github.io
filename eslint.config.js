@@ -6,7 +6,7 @@ import eslintPluginAstro from 'eslint-plugin-astro';
 import prettier from 'eslint-config-prettier';
 
 export default [
-	{ ignores: ['dist/**', '.astro/**', '.playwright-mcp/**'] },
+	{ ignores: ['dist/**', '.astro/**', '.playwright-mcp/**', '.claude/**'] },
 	js.configs.recommended,
 	// Node-окружение для конфигов и скриптов сборки.
 	{ files: ['**/*.{js,mjs,cjs}'], languageOptions: { globals: { ...globals.node } } },

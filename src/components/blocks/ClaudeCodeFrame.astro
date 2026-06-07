@@ -1,0 +1,179 @@
+---
+// Стильный мок интерфейса Claude Code для пояснения концептов в статьях.
+// Текст настраивается пропсами — реальные скриншоты не нужны.
+interface Props {
+	title?: string;
+	prompt?: string;
+	response?: string;
+	placeholder?: string;
+	model?: string;
+	cwd?: string;
+	context?: string;
+}
+
+const {
+	title = 'claude',
+	prompt = 'объясни, что делает этот модуль',
+	response = 'Модуль отвечает за маршрутизацию запросов…',
+	placeholder = 'спросите что-нибудь',
+	model = 'Opus 4.8',
+	cwd = '~/project',
+	context = '42%',
+} = Astro.props;
+---
+
+<div class="cc not-content" role="img" aria-label={`Мок интерфейса Claude Code: ${prompt}`}>
+	<div class="cc__bar">
+		<span class="cc__dots"><i></i><i></i><i></i></span>
+		<span class="cc__title">{title}</span>
+	</div>
+
+	<div class="cc__body">
+		<div class="cc__msg cc__msg--user">
+			<span class="cc__gutter">›</span>
+			<p>{prompt}</p>
+		</div>
+		<div class="cc__msg cc__msg--ai">
+			<span class="cc__gutter cc__accent">✶</span>
+			<p>{response}</p>
+		</div>
+	</div>
+
+	<div class="cc__input">
+		<span class="cc__accent">›</span>
+		<span class="cc__ph">{placeholder}</span>
+		<span class="cc__caret" aria-hidden="true"></span>
+	</div>
+
+	<div class="cc__status">
+		<span class="cc__accent">✶ {model}</span>
+		<span class="cc__sep">{cwd}</span>
+		<span class="cc__sep">контекст {context}</span>
+	</div>
+</div>
+
+<style>
+	.cc {
+		--cc-bg: #1e1c1a;
+		--cc-panel: #262320;
+		--cc-line: #38332e;
+		--cc-text: #e7e2da;
+		--cc-dim: #8d857a;
+		--cc-accent: #d97757;
+		max-width: 640px;
+		margin: 1.5rem auto;
+		border: 1px solid var(--cc-line);
+		border-radius: 12px;
+		background: var(--cc-bg);
+		color: var(--cc-text);
+		font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+		font-size: 0.85rem;
+		line-height: 1.5;
+		overflow: hidden;
+		box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.7);
+	}
+
+	.cc__bar {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.6rem 0.9rem;
+		background: var(--cc-panel);
+		border-bottom: 1px solid var(--cc-line);
+	}
+	.cc__dots {
+		display: inline-flex;
+		gap: 0.4rem;
+	}
+	.cc__dots i {
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		background: var(--cc-line);
+	}
+	.cc__dots i:first-child {
+		background: var(--cc-accent);
+	}
+	.cc__title {
+		color: var(--cc-dim);
+		letter-spacing: 0.02em;
+	}
+
+	.cc__body {
+		padding: 1rem 1.1rem 0.4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+	.cc__msg {
+		display: grid;
+		grid-template-columns: 1.4rem 1fr;
+		gap: 0.4rem;
+	}
+	.cc__msg p {
+		margin: 0;
+	}
+	.cc__msg--user p {
+		color: var(--cc-text);
+	}
+	.cc__msg--ai p {
+		color: var(--cc-dim);
+	}
+	.cc__gutter {
+		color: var(--cc-dim);
+		text-align: center;
+	}
+	.cc__accent {
+		color: var(--cc-accent);
+	}
+
+	.cc__input {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0.6rem 0.9rem;
+		padding: 0.6rem 0.8rem;
+		border: 1px solid var(--cc-line);
+		border-radius: 9px;
+		background: var(--cc-panel);
+	}
+	.cc__ph {
+		color: var(--cc-dim);
+	}
+	.cc__caret {
+		width: 7px;
+		height: 1.05em;
+		background: var(--cc-accent);
+		border-radius: 1px;
+		animation: cc-blink 1.1s steps(1) infinite;
+	}
+
+	.cc__status {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+		padding: 0.55rem 1rem 0.75rem;
+		color: var(--cc-dim);
+		font-size: 0.76rem;
+	}
+	.cc__sep {
+		position: relative;
+	}
+	.cc__sep::before {
+		content: '·';
+		position: absolute;
+		left: -0.55rem;
+		color: var(--cc-line);
+	}
+
+	@keyframes cc-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.cc__caret {
+			animation: none;
+		}
+	}
+</style>
