@@ -17,6 +17,8 @@ npm run format:check # prettier --check .
 
 Перед коммитом гнать: `npm run format && npm run lint && npm run typecheck` — все три должны быть зелёными.
 
+**GitHub:** утилита `gh` доступна — используем её для работы с GitHub (PR, issues, releases, API).
+
 ## Структура контента
 
 Страницы лежат в `src/content/docs/`. **Путь файла = URL.** Навигация (сайдбар) описана в `astro.config.mjs`.
