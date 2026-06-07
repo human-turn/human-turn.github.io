@@ -2,104 +2,21 @@
 title: HumanTurn
 description: 'Разбираемся, что остаётся человеку, когда код пишут модели: практики, инструменты и инфраструктура AI-native команд.'
 template: splash
-hero:
-  tagline: Разбираемся, что остаётся человеку.
-  image:
-    file: ../../assets/hero-orbit.webp
-  actions:
-    - text: Начать с нуля
-      link: /start/
-      icon: right-arrow
-    - text: Концепты и практики
-      link: /concepts/
-      icon: open-book
-      variant: minimal
+# Прячем весь верхний блок с авто-заголовком (content-panel вокруг h1#_top) —
+# на главной нужен только баннер, а пустая панель давала лишний отступ сверху.
+head:
+  - tag: style
+    content: '.content-panel:has(#_top){display:none}.content-panel{padding-top:0}'
 ---
+
+import MaterialsMap from '~/components/blocks/MaterialsMap.astro';
+import BannerArt from '~/components/blocks/BannerArt.astro';
+import heroGzhel from '~/assets/hero-banner.webp';
+
+<BannerArt src={heroGzhel} alt="Гжельская иллюстрация: человек оркеструет агентов" />
 
 ## Карта материалов
 
-Не дерево, а граф: материалы связаны между собой (что из чего вытекает, что чем
-дополняется). Кликните узел — попадёте в статью. Цвет — раздел.
+<MaterialsMap />
 
-```mermaid
-graph LR
-  CC["Claude Code"]
-  SK["Скиллы + CLI"]
-  MCP["MCP — что и зачем"]
-  CAT["Каталоги скиллов"]
-  VOICE["Голосовой ввод"]
-  PROV["Провайдеры и модели"]
-  LLM["LiteLLM Proxy"]
-  LLMA["LiteLLM → Anthropic"]
-  LOCAL["Локальные модели"]
-  ORB["OpenRouter-бекенд"]
-  OWUI["OpenWebUI"]
-  CCL["CC на локальных моделях"]
-  TEAM["Разделение на команды"]
-  REVG["AI-ревью в GitLab"]
-  REVB["AI-ревью как барьер"]
-  FRIC["Точки трения"]
-  MULTI["Множество репозиториев"]
-  DEP["Пайплайн деплоя"]
-  OAPI["OpenAPI-контракт"]
-  ARCH["Арх-репозиторий"]
-  DOCS["Актуализация доков"]
-
-  CC --> SK
-  SK -.-> MCP
-  MCP --> CAT
-  CC --> VOICE
-  CC --> CCL
-  PROV --> LLM
-  LLM --> LLMA
-  LLM --> LOCAL
-  PROV --> ORB
-  LLM --> OWUI
-  LOCAL --> CCL
-  TEAM --> REVG
-  REVG -.-> REVB
-  REVB --> FRIC
-  MULTI --> DEP
-  FRIC -.-> OAPI
-  OAPI --> ARCH
-  ARCH --> DOCS
-  OAPI -.-> MULTI
-
-  classDef start fill:#3a3f4b,stroke:#9aa3b2,color:#fff;
-  classDef tools fill:#27405f,stroke:#5b86c4,color:#fff;
-  classDef infra fill:#1f4031,stroke:#52a376,color:#fff;
-  classDef proc fill:#4a3320,stroke:#c08a4d,color:#fff;
-  classDef arch fill:#3f2440,stroke:#a361ad,color:#fff;
-  class CC start;
-  class SK,MCP,CAT,VOICE tools;
-  class PROV,LLM,LLMA,LOCAL,ORB,OWUI,CCL infra;
-  class TEAM,REVG,REVB,FRIC,MULTI,DEP proc;
-  class OAPI,ARCH,DOCS arch;
-
-  click CC "/start/claude-code/"
-  click SK "/tools/skills-cli/"
-  click MCP "/tools/mcp/"
-  click CAT "/tools/skills-catalog/"
-  click VOICE "/tools/voice-input/"
-  click PROV "/infra/providers-models/"
-  click LLM "/infra/litellm-proxy/"
-  click LLMA "/infra/litellm-anthropic/"
-  click LOCAL "/infra/local-models/"
-  click ORB "/infra/openrouter-backend/"
-  click OWUI "/infra/openwebui/"
-  click CCL "/infra/claude-code-local-models/"
-  click TEAM "/concepts/team-split/"
-  click REVG "/concepts/ai-review-gitlab/"
-  click REVB "/concepts/ai-review-barrier/"
-  click FRIC "/concepts/friction-points/"
-  click MULTI "/concepts/multi-repo/"
-  click DEP "/concepts/deploy-pipeline/"
-  click OAPI "/concepts/openapi-contract/"
-  click ARCH "/concepts/arch-repo/"
-  click DOCS "/concepts/arch-docs-sync/"
-```
-
-**Разделы:** <span style="color:#9aa3b2">●</span> Старт · <span style="color:#5b86c4">●</span> Инструменты · <span style="color:#52a376">●</span> Инфраструктура (модели и доступ) · <span style="color:#c08a4d">●</span> Процессы · <span style="color:#a361ad">●</span> Архитектура
-
-Сплошная стрелка — «вытекает из / нужно для», пунктир — смысловая связь между темами.
-Пока почти всё в черновиках (видно в `dev`, скрыто в прод-сборке) — наполняем по мере готовности.
+Почти всё пока в черновиках (видны в `dev`, скрыты в прод-сборке) — наполняем по мере готовности.

@@ -1,4 +1,5 @@
 ---
+slug: concepts/ai-review-barrier
 title: 'AI-ревью как барьер откровенной чепухи'
 description: 'Зачем AI-ревью на входе — отсекать явный мусор до человеческого ревью.'
 draft: true

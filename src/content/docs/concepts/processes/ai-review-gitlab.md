@@ -1,4 +1,5 @@
 ---
+slug: concepts/ai-review-gitlab
 title: 'AI код-ревью в GitLab через Claude Code'
 description: 'Встраиваем автоматическое код-ревью на Claude Code в pipeline GitLab.'
 draft: true

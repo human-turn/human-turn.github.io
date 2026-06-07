@@ -26,8 +26,7 @@ Lottie — это анимация, описанная обычным JSON: сл
 npx skills add LottieFiles/motion-design-skill
 
 # Предметный скил под Lottie: SVG → валидный Lottie JSON
-claude
-> /plugin marketplace add obeskay/lottie-animator-skill
+npx skills add obeskay/lottie-animator-skill
 ```
 
 - **`motion-design-skill`** даёт «режиссёрское» мышление — какую кривую взять для

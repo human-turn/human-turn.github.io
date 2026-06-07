@@ -1,0 +1,42 @@
+/* Палитра «Гжель»: кобальт-синий по белому.
+   Переопределяем токены Starlight — акцент и холодная (синеватая) серая шкала.
+   Светлая тема — основной «фарфоровый» вид; тёмная — кобальтовая ночь. */
+
+/* Тёмная тема (значения по умолчанию для :root) */
+:root {
+	--sl-color-accent-low: #16244d;
+	--sl-color-accent: #355ec0;
+	--sl-color-accent-high: #bcccef;
+
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #e7ecf7;
+	--sl-color-gray-2: #b9c2db;
+	--sl-color-gray-3: #818db0;
+	--sl-color-gray-4: #4f5a7e;
+	--sl-color-gray-5: #303a5c;
+	--sl-color-gray-6: #1f2747;
+	--sl-color-gray-7: #161d39;
+	--sl-color-black: #0c1230;
+}
+
+/* Светлая тема — белый фарфор + кобальтовые чернила */
+:root[data-theme='light'] {
+	--sl-color-accent-low: #d3e1f9;
+	--sl-color-accent: #2f54b0;
+	--sl-color-accent-high: #16306f;
+
+	--sl-color-white: #0e1a3a;
+	--sl-color-gray-1: #1c2a52;
+	--sl-color-gray-2: #2c3a64;
+	--sl-color-gray-3: #50608a;
+	--sl-color-gray-4: #8593b5;
+	--sl-color-gray-5: #bcc8e0;
+	--sl-color-gray-6: #e6edf8;
+	--sl-color-gray-7: #f3f7fc;
+	--sl-color-black: #ffffff;
+}
+
+/* Splash-главная: поджимаем воздух вокруг hero (без кнопок он раздут). */
+.hero {
+	padding-block: 1.5rem 0.5rem;
+}

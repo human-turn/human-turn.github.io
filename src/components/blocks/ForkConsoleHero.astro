@@ -1,0 +1,209 @@
+---
+// Заголовочный мок Claude Code для статьи про /fork: в строке ввода печатается
+// команда форка. Стиль наследует ClaudeCodeFrame (та же палитра/типографика).
+// Печать — на CSS/JS, уважает prefers-reduced-motion.
+interface Props {
+	prompt?: string;
+	response?: string;
+	command?: string;
+	model?: string;
+	cwd?: string;
+	context?: string;
+}
+const {
+	prompt = 'допили платёжную форму и прогони сценарии',
+	response = 'Готово по форме. Предупреждаю: у тестов очень много логов, контекст на исходе.',
+	command = '/fork прогони тесты через Playwright MCP и почини падающие',
+	model = 'Opus 4.8',
+	cwd = '~/project',
+	context = '23%',
+} = Astro.props;
+---
+
+<div class="fc not-content" role="img" aria-label={`Claude Code: ввод команды ${command}`}>
+	<div class="fc__bar">
+		<span class="fc__dots"><i></i><i></i><i></i></span>
+		<span class="fc__title">claude</span>
+	</div>
+
+	<div class="fc__body">
+		<div class="fc__msg fc__msg--user"><span class="fc__gutter">›</span><p>{prompt}</p></div>
+		<div class="fc__msg fc__msg--ai">
+			<span class="fc__gutter fc__accent">✶</span><p>{response}</p>
+		</div>
+	</div>
+
+	<div class="fc__input">
+		<span class="fc__accent">›</span>
+		<span class="fc__typed" data-command={command}></span><span class="fc__caret" aria-hidden="true"
+		></span>
+	</div>
+
+	<div class="fc__status">
+		<span class="fc__accent">✶ {model}</span>
+		<span class="fc__sep">{cwd}</span>
+		<span class="fc__sep">контекст {context}</span>
+	</div>
+</div>
+
+<script>
+	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	for (const el of document.querySelectorAll<HTMLElement>('.fc__typed')) {
+		const cmd = el.dataset.command ?? '';
+		if (reduce) {
+			el.textContent = cmd;
+			continue;
+		}
+		let i = 0;
+		const type = () => {
+			el.textContent = cmd.slice(0, i);
+			if (i < cmd.length) {
+				i += 1;
+				setTimeout(type, 45 + Math.random() * 45);
+			} else {
+				setTimeout(erase, 2600);
+			}
+		};
+		const erase = () => {
+			el.textContent = cmd.slice(0, i);
+			if (i > 0) {
+				i -= 2;
+				setTimeout(erase, 18);
+			} else {
+				i = 0;
+				setTimeout(type, 700);
+			}
+		};
+		setTimeout(type, 600);
+	}
+</script>
+
+<style>
+	.fc {
+		--cc-bg: #1e1c1a;
+		--cc-panel: #262320;
+		--cc-line: #38332e;
+		--cc-text: #e7e2da;
+		--cc-dim: #8d857a;
+		--cc-accent: #d97757;
+		max-width: 720px;
+		margin: 0 auto 2rem;
+		border: 1px solid var(--cc-line);
+		border-radius: 12px;
+		background: var(--cc-bg);
+		color: var(--cc-text);
+		font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+		font-size: 0.85rem;
+		line-height: 1.5;
+		overflow: hidden;
+		box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.7);
+	}
+
+	.fc__bar {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.6rem 0.9rem;
+		background: var(--cc-panel);
+		border-bottom: 1px solid var(--cc-line);
+	}
+	.fc__dots {
+		display: inline-flex;
+		gap: 0.4rem;
+	}
+	.fc__dots i {
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		background: var(--cc-line);
+	}
+	.fc__dots i:first-child {
+		background: var(--cc-accent);
+	}
+	.fc__title {
+		color: var(--cc-dim);
+		letter-spacing: 0.02em;
+	}
+
+	.fc__body {
+		padding: 1rem 1.1rem 0.4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+	.fc__msg {
+		display: grid;
+		grid-template-columns: 1.4rem 1fr;
+		gap: 0.4rem;
+	}
+	.fc__msg p {
+		margin: 0;
+	}
+	.fc__msg--user p {
+		color: var(--cc-text);
+	}
+	.fc__msg--ai p {
+		color: var(--cc-dim);
+	}
+	.fc__gutter {
+		color: var(--cc-dim);
+		text-align: center;
+	}
+	.fc__accent {
+		color: var(--cc-accent);
+	}
+
+	.fc__input {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0.6rem 0.9rem;
+		padding: 0.6rem 0.8rem;
+		border: 1px solid var(--cc-line);
+		border-radius: 9px;
+		background: var(--cc-panel);
+		min-height: 1.6em;
+	}
+	.fc__typed {
+		color: var(--cc-text);
+		white-space: pre;
+	}
+	.fc__caret {
+		width: 7px;
+		height: 1.05em;
+		background: var(--cc-accent);
+		border-radius: 1px;
+		animation: fc-blink 1.1s steps(1) infinite;
+		flex: none;
+	}
+
+	.fc__status {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+		padding: 0.55rem 1rem 0.75rem;
+		color: var(--cc-dim);
+		font-size: 0.76rem;
+	}
+	.fc__sep {
+		position: relative;
+	}
+	.fc__sep::before {
+		content: '·';
+		position: absolute;
+		left: -0.55rem;
+		color: var(--cc-line);
+	}
+
+	@keyframes fc-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.fc__caret {
+			animation: none;
+		}
+	}
+</style>

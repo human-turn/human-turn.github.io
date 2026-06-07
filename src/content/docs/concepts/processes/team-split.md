@@ -1,4 +1,5 @@
 ---
+slug: concepts/team-split
 title: 'Разделение на команды'
 description: 'Как делить работу между командами в AI-native процессе.'
 draft: true

@@ -1,0 +1,6 @@
+{/* Override: тема жёстко светлая, выбор темы отключён. Inline — чтобы не было FOUC. */}
+<script is:inline>
+	document.documentElement.dataset.theme = 'light';
+	// Заглушка глобала на случай, если на него где-то ссылаются.
+	window.StarlightThemeProvider = { updatePickers() {} };
+</script>

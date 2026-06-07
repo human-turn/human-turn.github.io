@@ -1,4 +1,5 @@
 ---
+slug: concepts/openapi-contract
 title: 'OpenAPI в отдельном репозитории как жёсткий контракт'
 description: 'OpenAPI-спека в отдельном репозитории как жёсткий контракт между сервисами.'
 draft: true

@@ -1,0 +1,86 @@
+---
+// Баннер главной: гжель-иллюстрация + SVG-оверлей «поток данных».
+// По дугам от центральной мандалы к узлам плывут светящиеся точки-пакеты.
+// Анимация на SMIL (animateMotion) — без JS; при prefers-reduce-motion скрыта.
+import { Image } from 'astro:assets';
+
+interface Props {
+	src: ImageMetadata;
+	alt: string;
+}
+const { src, alt } = Astro.props;
+
+// Дуги в координатах исходной иллюстрации (viewBox 2800×1543), от обода
+// мандалы к узлам. Совмещены с нарисованными стрелками приблизительно.
+const paths = [
+	{ id: 'fp1', d: 'M830,800 Q 630,744 430,685' },
+	{ id: 'fp2', d: 'M820,840 Q 690,830 560,795' },
+	{ id: 'fp3', d: 'M1380,560 Q 1520,470 1700,430' },
+	{ id: 'fp4', d: 'M1430,540 Q 1780,400 2150,360' },
+	{ id: 'fp5', d: 'M1460,560 Q 1950,360 2480,340' },
+	{ id: 'fp6', d: 'M1500,770 Q 1770,760 2050,770' },
+	{ id: 'fp7', d: 'M1500,800 Q 1980,840 2480,820' },
+	{ id: 'fp8', d: 'M1380,980 Q 1560,1040 1800,1080' },
+	{ id: 'fp9', d: 'M1430,1000 Q 1880,1110 2380,1150' },
+];
+
+// По 2 точки на дугу, разнесены по фазе и слегка по скорости.
+const dots = paths.flatMap((p, i) =>
+	[0, 1].map((k) => ({
+		href: '#' + p.id,
+		dur: (2.8 + (i % 3) * 0.5).toFixed(1) + 's',
+		begin: (k * 1.4 + i * 0.15).toFixed(2) + 's',
+	})),
+);
+---
+
+<figure class="banner-art not-content">
+	<Image src={src} alt={alt} class="banner-art__img" />
+	<svg class="banner-art__fx" viewBox="0 0 2800 1543" preserveAspectRatio="none" aria-hidden="true">
+		<defs>
+			{paths.map((p) => <path id={p.id} d={p.d} />)}
+		</defs>
+		<g class="banner-art__dots">
+			{
+				dots.map((dt) => (
+					<circle r="11" class="banner-art__dot">
+						<animateMotion dur={dt.dur} begin={dt.begin} repeatCount="indefinite">
+							<mpath href={dt.href} />
+						</animateMotion>
+					</circle>
+				))
+			}
+		</g>
+	</svg>
+</figure>
+
+<style>
+	.banner-art {
+		position: relative;
+		line-height: 0;
+		margin: 0 0 2rem;
+	}
+	.banner-art__img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 8px;
+	}
+	.banner-art__fx {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+	.banner-art__dot {
+		fill: #7fb2ff;
+		filter: drop-shadow(0 0 7px rgba(127, 178, 255, 0.95));
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.banner-art__dots {
+			display: none;
+		}
+	}
+</style>

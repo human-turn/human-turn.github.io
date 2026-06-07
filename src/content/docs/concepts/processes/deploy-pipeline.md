@@ -1,4 +1,5 @@
 ---
+slug: concepts/deploy-pipeline
 title: 'Рабочий пайплайн для деплоя'
 description: 'Как выстроен пайплайн деплоя в AI-native процессе.'
 draft: true

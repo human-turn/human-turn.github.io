@@ -1,0 +1,281 @@
+---
+// Карта материалов: разделы сайта как гжельские «фарфоровые таблички».
+// Кобальт по фарфору, тема наследуется из токенов Starlight (светлая/тёмная).
+// Данные дублируют сайдбар (astro.config.mjs) и slug-и страниц.
+interface Article {
+	title: string;
+	href: string;
+}
+interface Section {
+	label: string;
+	note: string;
+	articles: Article[];
+}
+
+const sections: Section[] = [
+	{
+		label: 'Claude Code',
+		note: 'С чего начать',
+		articles: [
+			{ title: 'Что это и зачем', href: '/start/claude-code/' },
+			{ title: 'Голосовой ввод', href: '/start/voice-input/' },
+		],
+	},
+	{
+		label: 'Продвинутый Claude Code',
+		note: 'Когда освоился',
+		articles: [
+			{ title: '/branch — ветка диалога', href: '/claude-code/branch-sessions/' },
+			{ title: '/fork — грязную работу в форк', href: '/claude-code/fork-context/' },
+			{ title: 'Множество репозиториев', href: '/concepts/multi-repo/' },
+		],
+	},
+	{
+		label: 'Харнесс-менеджмент',
+		note: 'Обвешиваем агента',
+		articles: [
+			{ title: 'MCP — что и зачем', href: '/tools/mcp/' },
+			{ title: 'Скиллы и CLI', href: '/tools/skills-cli/' },
+			{ title: 'Каталоги скиллов', href: '/tools/skills-catalog/' },
+		],
+	},
+	{
+		label: 'Инфраструктура: модели и доступ',
+		note: 'Свой доступ к моделям',
+		articles: [
+			{ title: 'Провайдеры и модели', href: '/infra/providers-models/' },
+			{ title: 'LiteLLM Proxy', href: '/infra/litellm-proxy/' },
+			{ title: 'LiteLLM → Anthropic', href: '/infra/litellm-anthropic/' },
+			{ title: 'Локальные модели', href: '/infra/local-models/' },
+			{ title: 'OpenRouter-бекенд', href: '/infra/openrouter-backend/' },
+			{ title: 'OpenWebUI', href: '/infra/openwebui/' },
+			{ title: 'CC на локальных моделях', href: '/infra/claude-code-local-models/' },
+		],
+	},
+	{
+		label: 'Процессы команды',
+		note: 'Встраиваем в работу',
+		articles: [
+			{ title: 'Разделение на команды', href: '/concepts/team-split/' },
+			{ title: 'AI-ревью в GitLab', href: '/concepts/ai-review-gitlab/' },
+			{ title: 'AI-ревью как барьер', href: '/concepts/ai-review-barrier/' },
+			{ title: 'Точки трения', href: '/concepts/friction-points/' },
+			{ title: 'OpenAPI-контракт', href: '/concepts/openapi-contract/' },
+			{ title: 'Арх-репозиторий', href: '/concepts/arch-repo/' },
+			{ title: 'Актуализация доков', href: '/concepts/arch-docs-sync/' },
+			{ title: 'Пайплайн деплоя', href: '/concepts/deploy-pipeline/' },
+		],
+	},
+	{
+		label: 'Прочие возможности агентов',
+		note: 'Разное',
+		articles: [
+			{ title: 'Lottie через Claude Code', href: '/concepts/architecture/lottie-claude-code/' },
+		],
+	},
+];
+---
+
+<nav class="map not-content" aria-label="Карта материалов сайта">
+	{
+		sections.map((section, i) => (
+			<section class="plate" style={`--i:${i}`}>
+				<header class="plate__head">
+					<p class="plate__note">{section.note}</p>
+					<h3 class="plate__title">{section.label}</h3>
+				</header>
+
+				<ul class="plate__list">
+					{section.articles.map((a) => (
+						<li>
+							<a href={a.href}>
+								<span class="plate__mark" aria-hidden="true" />
+								<span class="plate__text">{a.title}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		))
+	}
+</nav>
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+	.map {
+		--cobalt: var(--sl-color-accent);
+		--cobalt-soft: var(--sl-color-accent-low);
+		--ink: var(--sl-color-white);
+		--muted: var(--sl-color-gray-3);
+		--rim: var(--sl-color-gray-5);
+		--card: var(--sl-color-gray-7);
+
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+		gap: 1.25rem;
+		margin: 2rem 0 1.5rem;
+		align-items: start;
+	}
+
+	/* «Фарфоровая табличка»: светлый фон, двойной ободок-рамка как у гжели. */
+	.plate {
+		position: relative;
+		overflow: hidden;
+		padding: 1.6rem 1.4rem 1.5rem;
+		background: var(--card);
+		border: 1px solid var(--rim);
+		border-radius: 2px;
+		/* двойная «каёмка» фарфора + мягкая тень */
+		box-shadow:
+			inset 0 0 0 1px var(--card),
+			inset 0 0 0 2px color-mix(in srgb, var(--cobalt) 22%, transparent),
+			0 12px 30px -22px color-mix(in srgb, var(--cobalt) 60%, transparent);
+		transition:
+			transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+			box-shadow 0.45s ease;
+		animation: plate-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(var(--i) * 70ms);
+	}
+
+	/* кобальтовый «мазок» — мягкое радиальное пятно в углу */
+	.plate::after {
+		content: '';
+		position: absolute;
+		inset: auto -40% -55% auto;
+		width: 75%;
+		aspect-ratio: 1;
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--cobalt) 16%, transparent),
+			transparent 70%
+		);
+		pointer-events: none;
+	}
+
+	.plate:hover {
+		transform: translateY(-4px);
+		box-shadow:
+			inset 0 0 0 1px var(--card),
+			inset 0 0 0 2px color-mix(in srgb, var(--cobalt) 45%, transparent),
+			0 22px 44px -24px color-mix(in srgb, var(--cobalt) 75%, transparent);
+	}
+
+	.plate__head {
+		position: relative;
+		margin-bottom: 1rem;
+		padding-bottom: 0.7rem;
+	}
+	/* кобальтовая черта с ромбом по центру — намёк на гжельский орнамент */
+	.plate__head::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 2.6rem;
+		height: 2px;
+		background: var(--cobalt);
+	}
+
+	.plate__note {
+		margin: 0 0 0.2rem;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+		color: var(--muted);
+	}
+
+	.plate__title {
+		margin: 0;
+		font-family: 'Playfair Display', Georgia, serif;
+		font-weight: 700;
+		font-size: 1.3rem;
+		line-height: 1.15;
+		color: var(--ink);
+		max-width: 11em;
+	}
+
+	.plate__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+	}
+
+	.plate__list a {
+		display: flex;
+		align-items: baseline;
+		gap: 0.6rem;
+		padding: 0.34rem 0;
+		color: var(--ink);
+		text-decoration: none;
+		font-size: 0.94rem;
+		line-height: 1.35;
+		transition: color 0.2s ease;
+	}
+
+	/* ромбовидный маркер-«мазок» */
+	.plate__mark {
+		flex: none;
+		width: 6px;
+		height: 6px;
+		margin-top: 0.55em;
+		transform: rotate(45deg);
+		background: var(--cobalt);
+		opacity: 0.55;
+		transition:
+			transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+			opacity 0.2s ease;
+	}
+
+	/* подчёркивание прорисовывается слева направо */
+	.plate__text {
+		background-image: linear-gradient(var(--cobalt), var(--cobalt));
+		background-repeat: no-repeat;
+		background-position: 0 100%;
+		background-size: 0% 1px;
+		transition: background-size 0.3s ease;
+	}
+
+	.plate__list a:hover .plate__text,
+	.plate__list a:focus-visible .plate__text {
+		color: var(--cobalt);
+		background-size: 100% 1px;
+	}
+	.plate__list a:hover,
+	.plate__list a:focus-visible {
+		color: var(--cobalt);
+	}
+	.plate__list a:hover .plate__mark,
+	.plate__list a:focus-visible .plate__mark {
+		opacity: 1;
+		transform: rotate(45deg) scale(1.35);
+	}
+	.plate__list a:focus-visible {
+		outline: 2px solid var(--cobalt);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	@keyframes plate-in {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.plate {
+			animation: none;
+		}
+		.plate,
+		.plate:hover {
+			transform: none;
+		}
+		.plate__text {
+			transition: none;
+		}
+	}
+</style>

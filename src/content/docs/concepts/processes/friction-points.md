@@ -1,4 +1,5 @@
 ---
+slug: concepts/friction-points
 title: 'Точки трения в производстве'
 description: 'Где в разработке возникает трение и как AI-инструменты его снижают.'
 draft: true

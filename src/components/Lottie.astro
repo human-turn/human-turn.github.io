@@ -1,0 +1,45 @@
+---
+// Универсальный плеер Lottie через lottie-web. Файл анимации лежит в public/.
+// Уважает prefers-reduced-motion: показывает статичный последний кадр без автоплея.
+interface Props {
+	src: string;
+	label: string;
+	maxWidth?: number;
+}
+const { src, label, maxWidth = 820 } = Astro.props;
+---
+
+<div class="lottie" data-src={src} role="img" aria-label={label} style={`max-width:${maxWidth}px`}>
+</div>
+
+<script>
+	import lottie from 'lottie-web';
+
+	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	for (const el of document.querySelectorAll('.lottie')) {
+		const src = el instanceof HTMLElement ? el.dataset.src : undefined;
+		if (!src) continue;
+		const anim = lottie.loadAnimation({
+			container: el,
+			renderer: 'svg',
+			loop: !reduce,
+			autoplay: !reduce,
+			path: src,
+		});
+		if (reduce)
+			anim.addEventListener('DOMLoaded', () => anim.goToAndStop(anim.totalFrames - 1, true));
+	}
+</script>
+
+<style>
+	.lottie {
+		width: 100%;
+		margin: 1.5rem auto;
+	}
+	.lottie :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+</style>
