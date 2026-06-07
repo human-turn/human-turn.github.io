@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import starlight from '@astrojs/starlight';
 import starlightClientMermaid from '@pasqal-io/starlight-client-mermaid';
+import starlightLlmsTxt from '@rttnd/starlight-llms-txt';
 import remarkGfm from 'remark-gfm';
 
 // https://astro.build/config
@@ -18,7 +19,27 @@ export default defineConfig({
 		starlight({
 			title: 'HumanTurn',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
-			plugins: [starlightClientMermaid()],
+			plugins: [
+				starlightClientMermaid(),
+				starlightLlmsTxt({
+					projectName: 'HumanTurn',
+					description:
+						'Документация по AI-разработке: Claude Code, харнесс-менеджмент (MCP/скиллы/CLI), инференс-модели, процессы команды.',
+					// Форк отдаёт по .md на каждую страницу (доступна по URL страницы с .md).
+					generatePageMarkdown: true,
+					markdownFilePattern: 'replace', // /start.md, а не /start.html.md
+					// Нарезка по разделам сайдбара — для больших объёмов LLM тянет нужный кусок,
+					// а не весь llms-full.txt.
+					customSets: [
+						{ label: 'Claude Code', paths: ['start/**', 'claude-code/**'] },
+						{ label: 'Харнесс-менеджмент', paths: ['tools/**'] },
+						{ label: 'Инфраструктура', paths: ['infra/**'] },
+						{ label: 'Процессы команды', paths: ['concepts/processes/**'] },
+						{ label: 'Прочие возможности агентов', paths: ['concepts/architecture/**'] },
+						{ label: 'Библиотека блоков', paths: ['library/**'] },
+					],
+				}),
+			],
 			customCss: ['./src/styles/gzhel.css'],
 			// Тема только светлая: ThemeProvider форсирует light, ThemeSelect убирает переключатель.
 			components: {
