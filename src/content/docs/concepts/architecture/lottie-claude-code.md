@@ -1,8 +1,9 @@
 ---
+slug: concepts/lottie-claude-code
 title: Генерируем Lottie-анимацию через Claude Code
 description: Локальный способ получить векторную Lottie-анимацию из текстового запроса — без After Effects и без облачного аккаунта.
 draft: true
-tags: [инструменты, lottie, claude-code, how-to]
+tags: [инструменты, claude-code, how-to]
 sidebar:
   label: Lottie через Claude Code
 ---

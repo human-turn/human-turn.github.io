@@ -1,4 +1,5 @@
 ---
+slug: tools/mcp
 title: 'MCP — что это и зачем'
 description: 'Model Context Protocol: что это, какие задачи решает и чем отличается от связки «скиллы + CLI».'
 draft: true

@@ -1,4 +1,5 @@
 ---
+slug: tools/skills-cli
 title: 'Скиллы и CLI'
 description: 'Скиллы Claude Code и работа через CLI: из чего состоят и когда применять.'
 draft: true

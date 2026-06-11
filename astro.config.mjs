@@ -31,11 +31,12 @@ export default defineConfig({
 					// Нарезка по разделам сайдбара — для больших объёмов LLM тянет нужный кусок,
 					// а не весь llms-full.txt.
 					customSets: [
-						{ label: 'Claude Code', paths: ['start/**', 'claude-code/**'] },
+						{ label: 'Claude Code', paths: ['start/**'] },
 						{ label: 'Харнесс-менеджмент', paths: ['tools/**'] },
 						{ label: 'Инфраструктура', paths: ['infra/**'] },
 						{ label: 'Процессы команды', paths: ['concepts/processes/**'] },
 						{ label: 'Прочие возможности агентов', paths: ['concepts/architecture/**'] },
+						{ label: 'Продвинутый Claude Code', paths: ['claude-code/**'] },
 						{ label: 'Библиотека блоков', paths: ['library/**'] },
 					],
 				}),

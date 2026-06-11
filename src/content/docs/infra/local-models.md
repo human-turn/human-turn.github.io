@@ -1,4 +1,5 @@
 ---
+slug: infra/local-models
 title: 'Локальные и кастомные модели на LiteLLM'
 description: 'Подключение локальных и кастомных моделей через LiteLLM — для приватных данных.'
 draft: true

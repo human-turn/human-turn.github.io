@@ -1,4 +1,5 @@
 ---
+slug: infra/litellm-proxy
 title: 'LiteLLM Proxy'
 description: 'LiteLLM как единый прокси к разным LLM-провайдерам: маршрутизация, ключи, лимиты.'
 draft: true

@@ -1,4 +1,5 @@
 ---
+slug: start/claude-code
 title: 'Claude Code: что это и зачем'
 description: 'Что такое Claude Code, какие задачи закрывает и почему это база для AI-native команды.'
 draft: true

@@ -1,4 +1,5 @@
 ---
+slug: infra/openrouter-backend
 title: 'OpenRouter как бекенд для экспериментов'
 description: 'Быстрый доступ к множеству моделей через OpenRouter для прототипов и проверок.'
 draft: true

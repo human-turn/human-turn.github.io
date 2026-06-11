@@ -1,4 +1,5 @@
 ---
+slug: infra/claude-code-local-models
 title: 'Claude Code на локальных и кастомных моделях'
 description: 'Как подружить Claude Code с локальными/кастомными моделями через LiteLLM и OpenRouter.'
 draft: true

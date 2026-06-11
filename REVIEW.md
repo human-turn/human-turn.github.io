@@ -27,7 +27,7 @@
 | OpenRouter как бекенд для экспериментов              | src/content/docs/infra/openrouter-backend.md                 | черновик | заготовка, ждёт текста |
 | OpenWebUI                                            | src/content/docs/infra/openwebui.md                          | черновик | заготовка, ждёт текста |
 | Claude Code на локальных и кастомных моделях         | src/content/docs/infra/claude-code-local-models.md           | черновик | заготовка, ждёт текста |
-| Форк против заражения контекста                      | src/content/docs/claude-code/fork-context.md                 | черновик | первый драфт, на ревью |
+| Форк против заражения контекста                      | src/content/docs/claude-code/fork-context.mdx                | черновик | первый драфт, на ревью |
 | Ветка диалога (/branch)                              | src/content/docs/claude-code/branch-sessions.md              | черновик | заготовка, ждёт текста |
 | Разделение на команды                                | src/content/docs/concepts/processes/team-split.md            | черновик | заготовка, ждёт текста |
 | AI код-ревью в GitLab через Claude Code              | src/content/docs/concepts/processes/ai-review-gitlab.md      | черновик | заготовка, ждёт текста |

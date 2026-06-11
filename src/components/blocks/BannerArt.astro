@@ -3,6 +3,7 @@
 // По дугам от центральной мандалы к узлам плывут светящиеся точки-пакеты.
 // Анимация на SMIL (animateMotion) — без JS; при prefers-reduce-motion скрыта.
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
 	src: ImageMetadata;

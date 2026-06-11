@@ -1,4 +1,5 @@
 ---
+slug: infra/openwebui
 title: 'OpenWebUI'
 description: 'OpenWebUI как фронтенд к LLM-проксе для команды.'
 draft: true

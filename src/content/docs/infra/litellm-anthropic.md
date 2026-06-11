@@ -1,4 +1,5 @@
 ---
+slug: infra/litellm-anthropic
 title: 'LiteLLM → Anthropic'
 description: 'Прокси LiteLLM к Anthropic; нюанс с картинками — обрабатываем на оригинальном провайдере.'
 draft: true

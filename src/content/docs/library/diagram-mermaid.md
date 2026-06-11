@@ -1,8 +1,9 @@
 ---
+slug: library/diagram-mermaid
 title: Схема (Mermaid)
 description: Диаграммы как код — пишутся текстом в блоке ```mermaid и рендерятся на странице.
 draft: true
-tags: [библиотека, схема, mermaid]
+tags: [библиотека, справочник]
 sidebar:
   label: Схема (Mermaid)
 ---

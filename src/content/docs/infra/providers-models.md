@@ -1,4 +1,5 @@
 ---
+slug: infra/providers-models
 title: 'Провайдеры и модели: OpenRouter, DeepSeek, Anthropic'
 description: 'Обзор провайдеров и моделей — что выбрать под задачу и бюджет.'
 draft: true
