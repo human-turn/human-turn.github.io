@@ -14,4 +14,4 @@ sidebar:
 
 - [LiteLLM Proxy](/infra/litellm-proxy/) — TODO: чем связано
 - [OpenRouter-бекенд](/infra/openrouter-backend/) — TODO: чем связано
-- [Голосовой ввод](/tools/voice-input/) — TODO: чем связано
+- [Голосовой ввод](/claude-code/voice-input/) — TODO: чем связано

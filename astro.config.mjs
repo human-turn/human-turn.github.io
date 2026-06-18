@@ -24,7 +24,7 @@ export default defineConfig({
 				starlightLlmsTxt({
 					projectName: 'HumanTurn',
 					description:
-						'Документация по AI-разработке: Claude Code, харнесс-менеджмент (MCP/скиллы/CLI), инференс-модели, процессы команды.',
+						'Документация по AI-разработке: Claude Code и Pi Coding Agent, харнесс-менеджмент (MCP/скиллы/CLI), инференс-модели, процессы команды.',
 					// Форк отдаёт по .md на каждую страницу (доступна по URL страницы с .md).
 					generatePageMarkdown: true,
 					markdownFilePattern: 'replace', // /start.md, а не /start.html.md
@@ -32,6 +32,7 @@ export default defineConfig({
 					// а не весь llms-full.txt.
 					customSets: [
 						{ label: 'Claude Code', paths: ['start/**'] },
+						{ label: 'Pi Coding Agent', paths: ['pi/**'] },
 						{ label: 'Харнесс-менеджмент', paths: ['tools/**'] },
 						{ label: 'Инфраструктура', paths: ['infra/**'] },
 						{ label: 'Процессы команды', paths: ['concepts/processes/**'] },
@@ -49,6 +50,7 @@ export default defineConfig({
 			},
 			sidebar: [
 				{ label: 'Claude Code', items: [{ autogenerate: { directory: 'start' } }] },
+				{ label: 'Pi Coding Agent', items: [{ autogenerate: { directory: 'pi' } }] },
 				{ label: 'Харнесс-менеджмент', items: [{ autogenerate: { directory: 'tools' } }] },
 				{
 					label: 'Инфраструктура: модели и доступ',

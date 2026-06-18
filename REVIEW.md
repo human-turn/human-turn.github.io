@@ -19,7 +19,7 @@
 | Скиллы и CLI                                         | src/content/docs/tools/skills-cli.md                         | черновик | заготовка, ждёт текста |
 | MCP — что это и зачем                                | src/content/docs/tools/mcp.md                                | черновик | заготовка, ждёт текста |
 | Каталоги скиллов — внутренние маркетплейсы           | src/content/docs/tools/skills-catalog.md                     | черновик | заготовка, ждёт текста |
-| Распознавание аудио и голосовой ввод                 | src/content/docs/start/voice-input.md                        | черновик | заготовка, ждёт текста |
+| Распознавание аудио и голосовой ввод                 | src/content/docs/claude-code/voice-input.md                  | черновик | заготовка, ждёт текста |
 | Провайдеры и модели: OpenRouter, DeepSeek, Anthropic | src/content/docs/infra/providers-models.md                   | черновик | заготовка, ждёт текста |
 | LiteLLM Proxy                                        | src/content/docs/infra/litellm-proxy.md                      | черновик | заготовка, ждёт текста |
 | LiteLLM → Anthropic                                  | src/content/docs/infra/litellm-anthropic.md                  | черновик | заготовка, ждёт текста |
@@ -38,3 +38,5 @@
 | OpenAPI в отдельном репозитории как жёсткий контракт | src/content/docs/concepts/processes/openapi-contract.md      | черновик | заготовка, ждёт текста |
 | Подход к ведению архитектурного репозитория          | src/content/docs/concepts/processes/arch-repo.md             | черновик | заготовка, ждёт текста |
 | Арх-репа и актуализация документации по коду         | src/content/docs/concepts/processes/arch-docs-sync.md        | черновик | заготовка, ждёт текста |
+| Встроенные инструменты Pi через settings.json        | src/content/docs/pi/pi-default-tools.md                      | черновик | первый драфт           |
+| Фоновые задачи в tmux через pi-tmux                  | src/content/docs/pi/pi-tmux.md                               | черновик | первый драфт           |

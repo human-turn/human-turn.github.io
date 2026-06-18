@@ -1,9 +1,9 @@
 ---
-slug: start/voice-input
+slug: claude-code/voice-input
 title: 'Распознавание аудио и голосовой ввод'
 description: 'Модели распознавания речи и голосовой ввод в рабочем процессе.'
 draft: true
-tags: [инструменты, how-to]
+tags: [claude-code, how-to]
 sidebar:
   label: Голосовой ввод
 ---
