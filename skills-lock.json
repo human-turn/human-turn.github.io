@@ -1,23 +1,33 @@
 {
-  "version": 1,
-  "skills": {
-    "caveman-commit": {
-      "source": "juliusbrussee/caveman",
-      "sourceType": "github",
-      "skillPath": "skills/caveman-commit/SKILL.md",
-      "computedHash": "790a4eeace0be35c6691faf923518ba5bd50f1f1305d1101d09dd4971be94e00"
-    },
-    "lottie-animator": {
-      "source": "obeskay/lottie-animator-skill",
-      "sourceType": "github",
-      "skillPath": "skills/lottie-animator/SKILL.md",
-      "computedHash": "7e73bd4e840807eb035e7225a82843f37753283c3854f6bf660839dc3dd82ced"
-    },
-    "motion-design": {
-      "source": "LottieFiles/motion-design-skill",
-      "sourceType": "github",
-      "skillPath": "skills/motion-design/SKILL.md",
-      "computedHash": "9fcf9130cc46ee8fd1d8e09a9263347a9d76efbcbfa46591cc4cefaf19bbb453"
-    }
-  }
+	"version": 1,
+	"skills": {
+		"caveman-commit": {
+			"source": "juliusbrussee/caveman",
+			"sourceType": "github",
+			"skillPath": ".agents/skills/caveman-commit/SKILL.md",
+			"computedHash": "790a4eeace0be35c6691faf923518ba5bd50f1f1305d1101d09dd4971be94e00"
+		},
+		"lottie-animator": {
+			"source": "obeskay/lottie-animator-skill",
+			"sourceType": "github",
+			"skillPath": ".agents/skills/lottie-animator/SKILL.md",
+			"computedHash": "7e73bd4e840807eb035e7225a82843f37753283c3854f6bf660839dc3dd82ced"
+		},
+		"motion-design": {
+			"source": "LottieFiles/motion-design-skill",
+			"sourceType": "github",
+			"skillPath": ".agents/skills/motion-design/SKILL.md",
+			"computedHash": "9fcf9130cc46ee8fd1d8e09a9263347a9d76efbcbfa46591cc4cefaf19bbb453"
+		},
+		"idea": {
+			"source": "local",
+			"sourceType": "local",
+			"skillPath": ".agents/skills/idea/SKILL.md"
+		},
+		"writing-article": {
+			"source": "local",
+			"sourceType": "local",
+			"skillPath": ".agents/skills/writing-article/SKILL.md"
+		}
+	}
 }

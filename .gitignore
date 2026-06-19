@@ -26,12 +26,12 @@ pnpm-debug.log*
 # Служебные git-worktree от Claude Code
 .claude/worktrees/
 
-# Скиллы проекта храним в .claude/skills/ (родной механизм Claude Code).
+# Скиллы проекта храним в .agents/skills/ (универсальный механизм, коммитятся).
 # /skills/ — дубликат от внешнего менеджера скиллов, пересоздаётся из skills-lock.json.
 /skills/
 
 # Конфиги прочих AI-инструментов (создаются автоматически, в репо не нужны)
-.agents/
+# .agents/ — НЕ игнорируем: скиллы проекта лежат в .agents/skills/ и коммитятся
 .codebuddy/
 .commandcode/
 .continue/

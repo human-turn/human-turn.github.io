@@ -1,49 +1,49 @@
-# Starlight Starter Kit: Basics
+# HumanTurn
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Документационный сайт об AI-разработке: Claude Code, Pi Coding Agent, харнесс-менеджмент (MCP/скиллы/CLI), инференс-модели, процессы команды.
 
-```
-npm create astro@latest -- --template starlight
-```
+Стек: [Astro](https://astro.build) + [Starlight](https://starlight.astro.build).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Быстрый старт
 
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install
+npm run dev        # http://localhost:4321
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+## Команды
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+| Команда             | Что делает                    |
+| ------------------- | ----------------------------- |
+| `npm run dev`       | Dev-сервер на localhost:4321  |
+| `npm run dev:force` | Сброс кэша контент-слоя + dev |
+| `npm run build`     | Прод-сборка в `dist/`         |
+| `npm run preview`   | Просмотр собранного           |
+| `npm run typecheck` | Проверка типов Astro          |
+| `npm run lint`      | ESLint                        |
+| `npm run format`    | Prettier                      |
 
-Static assets, like favicons, can be placed in the `public/` directory.
+Перед коммитом: `npm run format && npm run lint && npm run typecheck`.
 
-## 🧞 Commands
+## Структура
 
-All commands are run from the root of the project, from a terminal:
+```
+src/content/docs/   — страницы (md/mdx)
+src/components/     — Astro-компоненты
+src/styles/         — CSS
+public/             — статика (Lottie-анимации и др.)
+scripts/            — генераторы Lottie-анимаций
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Контрибьютинг
 
-## 👀 Want to learn more?
+1. Идея → `/idea` (скилл, пишет в `INBOX.md`)
+2. Дозрела → `/writing-article` (скилл, ведёт через интервью к черновику)
+3. Или вручную: создать `.md`/`.mdx` в нужной папке `src/content/docs/`, frontmatter по конвенциям из [`AGENTS.md`](AGENTS.md)
+4. `npm run format && npm run lint && npm run typecheck` перед коммитом
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+## Для AI-агентов
+
+Инструкции для агентов (Claude Code, Pi, Codex и др.) — в [`AGENTS.md`](AGENTS.md).
+
+Скиллы проекта — в `.agents/skills/`.
