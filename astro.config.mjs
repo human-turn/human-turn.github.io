@@ -15,7 +15,7 @@ export default defineConfig({
 	vite: { server: { strictPort: true } },
 	// GFM (таблицы и т.п.) Astro 6 не прокидывает в .mdx — добавляем явно, чтобы MDX унаследовал.
 	// Astro 6.4: top-level markdown.remarkPlugins deprecated (удалят в 8.0) — плагины теперь в unified().
-	markdown: { processor: unified({ remarkPlugins: [remarkGfm] }) },
+	markdown: { gfm: true, processor: unified({ remarkPlugins: [remarkGfm] }) },
 	integrations: [
 		starlight({
 			title: 'HumanTurn',
@@ -80,9 +80,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Инфраструктура',
-					items: [
-						{ autogenerate: { directory: 'infra' } },
-					],
+					items: [{ autogenerate: { directory: 'infra' } }],
 				},
 				{
 					label: 'Прочее',
