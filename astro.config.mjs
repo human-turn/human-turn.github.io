@@ -4,6 +4,7 @@ import { unified } from '@astrojs/markdown-remark';
 import starlight from '@astrojs/starlight';
 import starlightClientMermaid from '@pasqal-io/starlight-client-mermaid';
 import starlightLlmsTxt from '@rttnd/starlight-llms-txt';
+import starlightAutoSidebar from 'starlight-auto-sidebar';
 import remarkGfm from 'remark-gfm';
 
 // https://astro.build/config
@@ -21,23 +22,23 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			plugins: [
 				starlightClientMermaid(),
+				starlightAutoSidebar(),
 				starlightLlmsTxt({
 					projectName: 'HumanTurn',
 					description:
-						'Документация по AI-разработке: Claude Code и Pi Coding Agent, харнесс-менеджмент (MCP/скиллы/CLI), инференс-модели, процессы команды.',
+						'Документация по AI-разработке: агенты (Claude Code, Pi), скиллы и MCP, инфраструктура инференса, практика внедрения в командах.',
 					// Форк отдаёт по .md на каждую страницу (доступна по URL страницы с .md).
 					generatePageMarkdown: true,
 					markdownFilePattern: 'replace', // /start.md, а не /start.html.md
 					// Нарезка по разделам сайдбара — для больших объёмов LLM тянет нужный кусок,
 					// а не весь llms-full.txt.
 					customSets: [
-						{ label: 'Claude Code', paths: ['start/**'] },
-						{ label: 'Pi Coding Agent', paths: ['pi/**'] },
-						{ label: 'Харнесс-менеджмент', paths: ['tools/**'] },
+						{ label: 'Хронология', paths: ['chronology/**'] },
+						{ label: 'Агенты разработки', paths: ['agents/**'] },
+						{ label: 'Скиллы и инструменты', paths: ['skills/**'] },
 						{ label: 'Инфраструктура', paths: ['infra/**'] },
-						{ label: 'Процессы команды', paths: ['concepts/processes/**'] },
-						{ label: 'Прочие возможности агентов', paths: ['concepts/architecture/**'] },
-						{ label: 'Продвинутый Claude Code', paths: ['claude-code/**'] },
+						{ label: 'Прочее', paths: ['misc/**'] },
+						{ label: 'Практика внедрения', paths: ['processes/**'] },
 						{ label: 'Библиотека блоков', paths: ['library/**'] },
 					],
 				}),
@@ -49,26 +50,52 @@ export default defineConfig({
 				ThemeSelect: './src/components/ThemeSelect.astro',
 			},
 			sidebar: [
-				{ label: 'Claude Code', items: [{ autogenerate: { directory: 'start' } }] },
-				{ label: 'Pi Coding Agent', items: [{ autogenerate: { directory: 'pi' } }] },
-				{ label: 'Харнесс-менеджмент', items: [{ autogenerate: { directory: 'tools' } }] },
+				{ slug: 'index' },
 				{
-					label: 'Инфраструктура: модели и доступ',
-					items: [{ autogenerate: { directory: 'infra' } }],
+					label: 'Хронология',
+					items: [{ autogenerate: { directory: 'chronology' } }],
 				},
 				{
-					label: 'Процессы команды',
-					items: [{ autogenerate: { directory: 'concepts/processes' } }],
+					label: 'Агенты разработки',
+					collapsed: false,
+					items: [
+						{ slug: 'agents' },
+						{
+							label: 'Claude Code',
+							items: [{ autogenerate: { directory: 'agents/claude-code' } }],
+						},
+						{
+							label: 'Pi Coding Agent',
+							items: [{ autogenerate: { directory: 'agents/pi' } }],
+						},
+						{
+							label: 'Продвинутые техники',
+							items: [{ autogenerate: { directory: 'agents/advanced' } }],
+						},
+					],
 				},
 				{
-					label: 'Прочие возможности агентов',
-					items: [{ autogenerate: { directory: 'concepts/architecture' } }],
+					label: 'Скиллы и инструменты',
+					items: [{ autogenerate: { directory: 'skills' } }],
 				},
 				{
-					label: 'Продвинутый Claude Code',
-					items: [{ autogenerate: { directory: 'claude-code' } }],
+					label: 'Инфраструктура',
+					items: [
+						{ autogenerate: { directory: 'infra' } },
+					],
 				},
-				{ label: 'Библиотека блоков', items: [{ autogenerate: { directory: 'library' } }] },
+				{
+					label: 'Прочее',
+					items: [{ autogenerate: { directory: 'misc' } }],
+				},
+				{
+					label: 'Практика внедрения',
+					items: [{ autogenerate: { directory: 'processes' } }],
+				},
+				{
+					label: 'Библиотека блоков',
+					items: [{ autogenerate: { directory: 'library' } }],
+				},
 			],
 		}),
 	],

@@ -2,21 +2,26 @@
 title: HumanTurn
 description: 'Разбираемся, что остаётся человеку, когда код пишут модели: практики, инструменты и инфраструктура AI-native команд.'
 template: splash
-# Прячем весь верхний блок с авто-заголовком (content-panel вокруг h1#_top) —
-# на главной нужен только баннер, а пустая панель давала лишний отступ сверху.
 head:
   - tag: style
     content: '.content-panel:has(#_top){display:none}.content-panel{padding-top:0}'
 ---
 
-import MaterialsMap from '~/components/blocks/MaterialsMap.astro';
 import BannerArt from '~/components/blocks/BannerArt.astro';
 import heroGzhel from '~/assets/hero-banner.webp';
 
 <BannerArt src={heroGzhel} alt="Гжельская иллюстрация: человек оркеструет агентов" />
 
-## Карта материалов
+## Содержание
 
-<MaterialsMap />
+:::caution
+Сайт на стадии активного наполнения. Почти все разделы пока в черновиках.
+:::
 
-Почти всё пока в черновиках (видны в `dev`, скрыты в прод-сборке) — наполняем по мере готовности.
+- **[Хронология](/chronology/)** — история развития AI-инструментов и ключевые идеи HumanTurn.
+- **[Агенты разработки](/agents/)** — Claude Code и Pi Coding Agent: общие сведения и специфические возможности.
+- **[Скиллы и инструменты](/skills/)** — MCP, каталоги скиллов, CLI: общие инструменты для всех харнесов.
+- **[Инфраструктура](/infra/)** — LiteLLM, провайдеры, модели: как организован инференс.
+- **[Прочее](/misc/)** — OpenWebUI и другие инструменты.
+- **[Практика внедрения](/processes/)** — процессы и практики для AI-разработки в больших командах.
+- **[Библиотека блоков](/library/)** — переиспользуемые компоненты: диаграммы Mermaid, Lottie-анимации, моки интерфейсов.

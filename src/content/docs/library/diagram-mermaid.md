@@ -1,5 +1,4 @@
 ---
-slug: library/diagram-mermaid
 title: Схема (Mermaid)
 description: Диаграммы как код — пишутся текстом в блоке ```mermaid и рендерятся на странице.
 draft: true
