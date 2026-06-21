@@ -47,39 +47,55 @@ flow: "" {
 
   # ── Фаза 1: Знакомство ──
   discovery: Знакомство {
+    style.fill: "#eef2fb"
+    style.font-color: "#16306f"
+    style.bold: true
     harness -> mcp: Инициализация сессии {
       style.stroke: "#2f54b0"
+      style.font-color: "#1c2a52"
     }
     mcp -> harness: Список инструментов\n(tools/list) {
       style.stroke: "#2f54b0"
+      style.font-color: "#1c2a52"
     }
     harness -> llm: Промпт + доступные инструменты {
       style.stroke: "#2f54b0"
+      style.font-color: "#1c2a52"
     }
   }
 
   # ── Фаза 2: Вызов инструмента и ответ ──
   call: Вызов инструмента и ответ {
+    style.fill: "#e8f2f2"
+    style.font-color: "#1d5a64"
+    style.bold: true
     llm -> harness: Вызови инструмент\njira.get_issue("PROJ-42") {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     harness -> mcp: tools/call\njira.get_issue("PROJ-42") {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     mcp -> jira: HTTP GET /issue/PROJ-42 {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     jira -> mcp: статус, исполнитель, ... {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     mcp -> harness: Результат вызова {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     harness -> llm: tool_result {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
     llm -> harness: Задача PROJ-42:\nв работе, исполнитель Иванов {
       style.stroke: "#2d7d8a"
+      style.font-color: "#1c2a52"
     }
   }
 }
@@ -102,7 +118,19 @@ network: Внутренняя сеть предприятия {
   direction: right
 
   workstation: Рабочая станция {
-    agent: Харнесс
+    agent: Харнесс {
+      style.fill: "#d3e1f9"
+      style.stroke: "#2f54b0"
+      style.stroke-width: 3
+    }
+
+    # MCP-серверы — отдельные субпроцессы, порождённые харнессом
+    mcp: MCP-серверы · субпроцессы {
+      chrome_mcp: chrome-mcp
+      jira_mcp: jira-mcp
+      api_mcp: api-mcp
+    }
+
     files: Файлы / диск
     chrome: Google Chrome
   }
@@ -113,31 +141,33 @@ network: Внутренняя сеть предприятия {
   }
 }
 
-# Прямой доступ к диску — обычная сплошная
-network.workstation.agent -> network.workstation.files
+# Прямой доступ к диску — без MCP, обычная сплошная
+network.workstation.agent -> network.workstation.files: файловый доступ
 
-# MCP: двусторонний обмен с серверами — бирюзовый
-network.workstation.agent <-> network.workstation.chrome: {
-  style: {
-    stroke: "#2d7d8a"
-    stroke-dash: 4
-  }
+# Харнесс ↔ MCP-сервер — по протоколу MCP, бирюзовый пунктир
+network.workstation.agent <-> network.workstation.mcp.chrome_mcp: MCP {
+  style: { stroke: "#2d7d8a"; stroke-dash: 4 }
 }
-network.workstation.agent <-> network.corp.jira: {
-  style: {
-    stroke: "#2d7d8a"
-    stroke-dash: 4
-  }
+network.workstation.agent <-> network.workstation.mcp.jira_mcp: MCP {
+  style: { stroke: "#2d7d8a"; stroke-dash: 4 }
 }
-network.workstation.agent <-> network.corp.api: {
-  style: {
-    stroke: "#2d7d8a"
-    stroke-dash: 4
-  }
+network.workstation.agent <-> network.workstation.mcp.api_mcp: MCP {
+  style: { stroke: "#2d7d8a"; stroke-dash: 4 }
+}
+
+# MCP-сервер ↔ целевая система — «родным» транспортом сервера, сплошной сланец
+network.workstation.mcp.chrome_mcp <-> network.workstation.chrome: CDP {
+  style: { stroke: "#50608a" }
+}
+network.workstation.mcp.jira_mcp <-> network.corp.jira: HTTP {
+  style: { stroke: "#50608a" }
+}
+network.workstation.mcp.api_mcp <-> network.corp.api: HTTP {
+  style: { stroke: "#50608a" }
 }
 
 # LLM ↔ Харнесс: двусторонний обмен
-llm <-> network.workstation.agent: {
+llm <-> network.workstation.agent: HTTPS {
   style: {
     stroke: "#2f54b0"
     stroke-width: 2
