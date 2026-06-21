@@ -6,25 +6,13 @@
 
 ## Команды
 
-```bash
-npm run dev          # dev-сервер на http://localhost:4321 (strictPort)
-npm run dev:force    # сброс content layer cache (вместо rm -rf .astro)
-npm run build        # прод-сборка в ./dist
-npm run preview      # локальный просмотр собранного
-npm run typecheck    # astro check
-npm run lint         # eslint .
-npm run lint:fix     # eslint . --fix
-npm run format       # prettier --write .
-npm run format:check # prettier --check .
-```
+Все скрипты — в `package.json`. Ключевое:
 
-Перед коммитом: `npm run format && npm run lint && npm run typecheck` — все три зелёные.
+- `npm run dev` — сервер на http://localhost:4321 (`strictPort`). «port in use» → уже запущен, новый не поднимай.
+- Перед коммитом: `npm run format && npm run lint && npm run typecheck` — все три зелёные.
+- `gh` доступна.
 
-**Порт 4321, `strictPort`.** Если «port in use» — сервер уже запущен, новый не поднимай.
-
-**Залипла картинка/frontmatter в dev?** HMR кэширует ассеты. `npm run dev:force` (= `astro dev --force`).
-
-**GitHub:** утилита `gh` доступна.
+**Залипла картинка/frontmatter в dev?** Известный баг content-layer кэша Astro. Сначала перезапусти сервер; если не помогло — `npm run dev:force` (тяжёлый, сносит кэш — крайняя мера).
 
 ## Структура контента
 
