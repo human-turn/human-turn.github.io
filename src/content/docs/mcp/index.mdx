@@ -1,0 +1,165 @@
+---
+title: 'MCP: что это и зачем агенту'
+description: 'Model Context Protocol — стандартный протокол, который даёт агенту доступ к локальной инфраструктуре и ПО на машине: базы данных, API, файловые системы и не только.'
+draft: true
+tags: [инструменты, концепт, mcp]
+sidebar:
+  order: 1
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Контекст
+
+Агенты разработки (Claude Code, Pi) изначально ограничены файловой системой. Обратиться к корпоративному трекеру задач, к документации по фреймворку или к внутреннему корпоративному API они не могут. Без специальных средств агенты будут использовать `curl` и встроенные веб-инструменты (например, WebFetch), но это крайне неэффективно.
+
+## Проблема
+
+Как дать агенту авторизованный доступ к ресурсам окружающей инфраструктуры, помимо файловой системы?
+
+## Предпосылки
+
+1. **Бизнес-логика Anthropic.** Для активного внедрения в платёжеспособный рынок компании нужны были стандартные интеграции. Anthropic разработала и открыла стандарт MCP — чтобы как можно больше интеграций появилось и у неё было больше точек внедрения.
+2. **CLI-клиенты и скиллы не всегда уместны.** Часто нужна строгая типизация данных, нужны ограничения ([elicitations в MCP](beyond-tools.md)) и stateful подключение к ПО, например к Chrome DevTools.
+3. **MCP — не только инструменты.** В протоколе есть: sampling (запрос к LLM), resources (доступ к данным), prompts (шаблоны), notifications (уведомления), двусторонняя связь.
+
+## Решение
+
+[Model Context Protocol](https://modelcontextprotocol.io/) — открытый протокол (JSON-RPC 2.0), стандартизирует три вещи:
+
+- Как агент **находит** доступные инструменты — согласование возможностей при подключении (capability negotiation, [подробнее](https://modelcontextprotocol.io/))
+- Как **вызывает** их и получает результат ([подробнее](https://modelcontextprotocol.io/))
+- Как сервер **сообщает** о возможностях и ограничениях ([подробнее](https://modelcontextprotocol.io/))
+
+На практике: харнесс подключается к MCP-серверу, который взаимодействует с целевой системой.
+
+<Tabs>
+  <TabItem label="Потоки данных">
+
+```d2
+flow: "" {
+  shape: sequence_diagram
+
+  llm: LLM-провайдер
+  harness: Харнесс
+  mcp: MCP-сервер
+  jira: Jira
+
+  # ── Фаза 1: Знакомство ──
+  discovery: Знакомство {
+    harness -> mcp: Инициализация сессии {
+      style.stroke: "#2f54b0"
+    }
+    mcp -> harness: Список инструментов\n(tools/list) {
+      style.stroke: "#2f54b0"
+    }
+    harness -> llm: Промпт + доступные инструменты {
+      style.stroke: "#2f54b0"
+    }
+  }
+
+  # ── Фаза 2: Вызов инструмента и ответ ──
+  call: Вызов инструмента и ответ {
+    llm -> harness: Вызови инструмент\njira.get_issue("PROJ-42") {
+      style.stroke: "#2d7d8a"
+    }
+    harness -> mcp: tools/call\njira.get_issue("PROJ-42") {
+      style.stroke: "#2d7d8a"
+    }
+    mcp -> jira: HTTP GET /issue/PROJ-42 {
+      style.stroke: "#2d7d8a"
+    }
+    jira -> mcp: статус, исполнитель, ... {
+      style.stroke: "#2d7d8a"
+    }
+    mcp -> harness: Результат вызова {
+      style.stroke: "#2d7d8a"
+    }
+    harness -> llm: tool_result {
+      style.stroke: "#2d7d8a"
+    }
+    llm -> harness: Задача PROJ-42:\nв работе, исполнитель Иванов {
+      style.stroke: "#2d7d8a"
+    }
+  }
+}
+
+# Харнесс — оркестратор, выделяем
+flow.harness.style.fill: "#d3e1f9"
+flow.harness.style.stroke: "#2f54b0"
+flow.harness.style.stroke-width: 3
+```
+
+  </TabItem>
+  <TabItem label="Компоненты и связи">
+
+```d2
+direction: down
+
+llm: LLM-провайдер
+
+network: Внутренняя сеть предприятия {
+  direction: right
+
+  workstation: Рабочая станция {
+    agent: Харнесс
+    files: Файлы / диск
+    chrome: Google Chrome
+  }
+
+  corp: Корпоративные системы {
+    jira: Jira
+    api: Абстрактный внутренний API
+  }
+}
+
+# Прямой доступ к диску — обычная сплошная
+network.workstation.agent -> network.workstation.files
+
+# MCP: двусторонний обмен с серверами — бирюзовый
+network.workstation.agent <-> network.workstation.chrome: {
+  style: {
+    stroke: "#2d7d8a"
+    stroke-dash: 4
+  }
+}
+network.workstation.agent <-> network.corp.jira: {
+  style: {
+    stroke: "#2d7d8a"
+    stroke-dash: 4
+  }
+}
+network.workstation.agent <-> network.corp.api: {
+  style: {
+    stroke: "#2d7d8a"
+    stroke-dash: 4
+  }
+}
+
+# LLM ↔ Харнесс: двусторонний обмен
+llm <-> network.workstation.agent: {
+  style: {
+    stroke: "#2f54b0"
+    stroke-width: 2
+    stroke-dash: 4
+  }
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Последствия
+
+### Известные проблемы и ограничения
+
+- **Нет механизма хранения секретов.** Токены API лежат в переменных окружения или конфиге — это ненадёжно. В продакшене нужны раперы типа `pass` или интеграция с keyring/vault.
+- **Проблемы качества публичных серверов.** Авторов MCP-серверов больше, чем пользователей MCP. Маркетплейсы завалены некачественными проектами — с продуктами крупных вендоров всё хорошо, а в остальном придётся внимательно выбирать.
+- **Capability negotiation не везде работает.** Не все клиенты поддерживают полный протокол. Например, sampling и [elicitation](beyond-tools.md) требуют от хоста специальной поддержки — иначе сервер упадёт с ошибкой.
+
+## Связанные материалы
+
+- **[MCP: не только инструменты — продвинутые возможности протокола](beyond-tools.md)** — sampling, elicitation, двусторонняя связь
+- **[MCP в Pi: подключаем серверы](../agents/pi/mcp-setup.md)** — пошаговый туториал
+- **[Скиллы](../skills/index.md)** — как скиллы и MCP дополняют друг друга
+- **[CLI-клиенты и скиллы](../skills/cli-agents.md)** — подход через расширение команд

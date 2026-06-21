@@ -6,6 +6,8 @@ import starlightClientMermaid from '@pasqal-io/starlight-client-mermaid';
 import starlightLlmsTxt from '@rttnd/starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import remarkGfm from 'remark-gfm';
+import remarkD2Theme from './src/plugins/remark-d2-theme.js';
+import astroD2 from 'astro-d2';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,8 +17,14 @@ export default defineConfig({
 	vite: { server: { strictPort: true } },
 	// GFM (таблицы и т.п.) Astro 6 не прокидывает в .mdx — добавляем явно, чтобы MDX унаследовал.
 	// Astro 6.4: top-level markdown.remarkPlugins deprecated (удалят в 8.0) — плагины теперь в unified().
-	markdown: { gfm: true, processor: unified({ remarkPlugins: [remarkGfm] }) },
+	markdown: { gfm: true, processor: unified({ remarkPlugins: [remarkGfm, remarkD2Theme] }) },
 	integrations: [
+		astroD2({
+			layout: 'elk',
+			pad: 20,
+			skipGeneration: false,
+			inline: true,
+		}),
 		starlight({
 			title: 'HumanTurn',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
@@ -35,7 +43,8 @@ export default defineConfig({
 					customSets: [
 						{ label: 'Хронология', paths: ['chronology/**'] },
 						{ label: 'Агенты разработки', paths: ['agents/**'] },
-						{ label: 'Скиллы и инструменты', paths: ['skills/**'] },
+						{ label: 'Скиллы', paths: ['skills/**'] },
+						{ label: 'MCP', paths: ['mcp/**'] },
 						{ label: 'Инфраструктура', paths: ['infra/**'] },
 						{ label: 'Прочее', paths: ['misc/**'] },
 						{ label: 'Практика внедрения', paths: ['processes/**'] },
@@ -75,8 +84,12 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Скиллы и инструменты',
+					label: 'Скиллы',
 					items: [{ autogenerate: { directory: 'skills' } }],
+				},
+				{
+					label: 'MCP',
+					items: [{ autogenerate: { directory: 'mcp' } }],
 				},
 				{
 					label: 'Инфраструктура',

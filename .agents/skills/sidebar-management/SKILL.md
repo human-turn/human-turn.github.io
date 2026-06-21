@@ -16,7 +16,9 @@ The site uses a **hybrid sidebar**: manual groups at the top level, `autogenerat
 
 ## Adding a new page
 
-1. Create `.md`/`.mdx` file in the appropriate folder under `src/content/docs/`
+1. Create `.md`/`.mdx` file in the appropriate folder under `src/content/docs/`.
+   - **`.mdx`** — если страница использует компоненты (`<Tabs>`, `<TabItem>`, `import`).
+   - **`.md`** — для обычных страниц без компонентов.
 2. Add frontmatter: `title`, `description`, `draft: true`, `tags`
 3. Optionally set `sidebar: { order: N }` to control position within the group
 
@@ -31,19 +33,23 @@ Done. `autogenerate` picks it up automatically.
 ## Controlling order
 
 ### Directories (folders as sidebar groups)
+
 Via `_meta.yml` in the folder:
+
 ```yaml
-order: 3          # position in parent group (lower = higher)
-sort: label       # how to sort items inside: 'slug' | 'label' | 'reverse-slug' | 'reverse-label'
-label: 'Custom'   # override displayed name
-hidden: true      # hide from sidebar
+order: 3 # position in parent group (lower = higher)
+sort: label # how to sort items inside: 'slug' | 'label' | 'reverse-slug' | 'reverse-label'
+label: 'Custom' # override displayed name
+hidden: true # hide from sidebar
 ```
 
 ### Individual pages
+
 Via frontmatter:
+
 ```yaml
 sidebar:
-  order: 2        # position in parent group
+  order: 2 # position in parent group
   label: 'Custom' # override displayed title
 ```
 
@@ -76,11 +82,11 @@ src/content/docs/
 
 ## Key files
 
-| File | Purpose |
-|---|---|
-| `astro.config.mjs` | Sidebar structure, llms-txt customSets |
-| `src/content.config.ts` | `autoSidebar` collection (required by `starlight-auto-sidebar`) |
-| `src/content/docs/*/_meta.yml` | Per-folder ordering and sorting config |
+| File                           | Purpose                                                         |
+| ------------------------------ | --------------------------------------------------------------- |
+| `astro.config.mjs`             | Sidebar structure, llms-txt customSets                          |
+| `src/content.config.ts`        | `autoSidebar` collection (required by `starlight-auto-sidebar`) |
+| `src/content/docs/*/_meta.yml` | Per-folder ordering and sorting config                          |
 
 ## Dependencies
 
