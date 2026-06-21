@@ -21,6 +21,7 @@
 		"@pasqal-io/starlight-client-mermaid": "^0.1.0",
 		"@rttnd/starlight-llms-txt": "^0.6.1",
 		"astro": "^6.3.1",
+		"astro-d2": "^0.11.0",
 		"lottie-web": "^5.13.0",
 		"remark-gfm": "4.0.1",
 		"sharp": "^0.34.5",
