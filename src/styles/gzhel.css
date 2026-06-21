@@ -40,3 +40,12 @@
 .hero {
 	padding-block: 1.5rem 0.5rem;
 }
+
+/* D2-диаграммы: кап по ширине, чтобы inline-SVG не растягивался во весь контент.
+   Поштучно можно переопределить атрибутом фенса: ```d2 width="480" */
+svg[data-d2-version] {
+	max-width: min(100%, 560px);
+	height: auto;
+	display: block;
+	margin-inline: auto;
+}

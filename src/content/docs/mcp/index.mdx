@@ -1,7 +1,7 @@
 ---
 title: 'MCP: что это и зачем агенту'
 description: 'Model Context Protocol — стандартный протокол, который даёт агенту доступ к локальной инфраструктуре и ПО на машине: базы данных, API, файловые системы и не только.'
-draft: true
+draft: false
 tags: [инструменты, концепт, mcp]
 sidebar:
   order: 1
@@ -16,6 +16,46 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 ## Проблема
 
 Как дать агенту авторизованный доступ к ресурсам окружающей инфраструктуры, помимо файловой системы?
+
+```d2
+direction: down
+
+llm: LLM-провайдер
+
+network: Внутренняя сеть предприятия {
+  direction: right
+
+  workstation: Рабочая станция {
+    agent: Харнесс {
+      style.fill: "#d3e1f9"
+      style.stroke: "#2f54b0"
+      style.stroke-width: 3
+    }
+    files: Файлы / диск
+  }
+
+  corp: Корпоративные системы {
+    style.stroke: "#e57373"
+    style.stroke-dash: 4
+    jira: Jira
+    api: Внутренний API
+  }
+}
+
+# LLM ↔ Харнесс — двусторонний обмен
+llm <-> network.workstation.agent: HTTPS {
+  style: { stroke: "#2f54b0"; stroke-width: 2; stroke-dash: 4 }
+}
+
+# К диску доступ есть — обычная сплошная
+network.workstation.agent -> network.workstation.files: файловый доступ
+
+# У LLM нет доступа к внутренним системам — стена
+llm -> network.corp: нет доступа к внутренним системам {
+  target-arrowhead.shape: cross
+  style: { stroke: "#e57373"; stroke-width: 2; stroke-dash: 4 }
+}
+```
 
 ## Предпосылки
 
